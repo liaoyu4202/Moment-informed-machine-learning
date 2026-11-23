@@ -1,2 +1,45 @@
 # Moment-informed-machine-learning
-Moment-informed machine learning for parameter inference in the two-state stochastic gene expression model
+Moment Informed Machine Learning for Parameter Inference in the Two-State Stochastic Gene Expression Model
+
+# 基于矩信息的机器学习用于两状态随机基因表达模型的参数推断
+
+本仓库包含论文所用的分析代码、模拟单细胞数据和图表数据。
+
+## 代码（`code.zip`）
+
+| 文件 | 用途 |
+| --- | --- |
+| `endtest_2_state_machine_learning.ipynb` | 采样模型参数，用 Gillespie 算法模拟单细胞 mRNA 计数，并可加入缩放泊松观测噪声。 |
+| `分布判断.ipynb` | 计算稳态 mRNA 分布，并判断其为单峰、递减或双峰分布。 |
+| `ml_estimation.ipynb` | 提取分布统计量和矩估计，训练四种树回归器。支持与独立矩估计和已有的最大似然估计（MLE）比较，并分析预测误差和特征重要性。 |
+| `grouped_permutation.ipynb` | 计算特征的 Spearman 相关性，并在交叉验证中计算分组置换重要性，汇总和绘制结果。 |
+| `parfit_twostate_2.m` | 用最大似然法从单细胞计数估计两状态模型参数。 |
+| `S1fun_TM_pm.m` | 计算 `parfit_twostate_2.m` 所需的稳态概率和负对数似然。 |
+
+## 结果数据（`result.zip`）
+
+| 文件 | 内容 |
+| --- | --- |
+| `fig2a.csv` | 混合与固定训练样本量下的截断平均相对误差（MRE），以及 MLE 和独立矩估计的基准结果。 |
+| `fig2b.csv` | 不同测试样本量下四种回归器、MLE 和独立矩估计的 MRE。 |
+| `fig2c.csv` | 按方法、参数和测试样本量统计的极端估计数。 |
+| `fig2d.csv` | 参数推断用时及相对于 MLE 的加速倍数。 |
+| `fig3a.csv` | 图 3a 的归一化原生特征重要性。 |
+| `fig3b.csv` | 各交叉验证折和各次重复的分组置换重要性。 |
+| `fig3c.csv` | 图 3c 和图 3d 的消融结果，包括移除矩估计特征后的近似 MRE 和改进损失。 |
+| `fig4.csv` | 无噪声主测试集上混合训练、分布特异性训练和 MLE 的 MRE。 |
+| `fig5.csv` | 带噪主测试集上四种训练策略和 MLE 的 MRE。 |
+
+## 数据集
+
+### `测试集` 压缩包
+
+- `主测试集` 包含 1,000 组参数的无噪声测试数据。
+- `主测试集_noise` 为含缩放泊松观测噪声的主测试集。
+- `平衡测试集` 包含单峰、递减和双峰分布的数据，每种分布各 500 组参数。
+
+### `训练集` 压缩包
+
+- 同一批 30,000 组参数对应 13 种训练样本量，分别为 500、600、700、800、900、1,000、2,000、3,000、4,000、5,000、6,000、8,000 和 10,000 个细胞。
+- 带噪训练集的样本量为 5,000 个细胞。
+- 单峰、递减和双峰各有一套分布特异性训练集。每套包含 10,000 组参数，每组样本量为 5,000 个细胞。
